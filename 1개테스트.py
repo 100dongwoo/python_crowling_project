@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 
 res = requests.get('https://www.donga.com/news/Culture/article/all/20201113/103953506/1')
 soup = BeautifulSoup(res.content, 'html.parser')
-body = soup.find(class_='article_txt').findAll('div')
+body = soup.find(class_='article_title').findAll('h1')
 f = open('daum.txt', 'w')
 # print(body)
 article = [];

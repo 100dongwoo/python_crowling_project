@@ -11,7 +11,7 @@ req = requests.get(DongaUrl)
 soup = BeautifulSoup(req.text, 'html.parser')
 for i in soup.select("#content > div.page > a"):
     urlArray.append(DongaUrl + i['href'])
-    print(DongaUrl + i['href'])
+    # print(DongaUrl + i['href'])
 
 # 동아일보 특성상 문화 페이지에도 다른 종류에 기사들이 포함되있다.
 for UrlList in urlArray:
@@ -19,22 +19,18 @@ for UrlList in urlArray:
     soup2 = BeautifulSoup(req2.text, 'html.parser')
     for i in soup2.select("#content > div.articleList>div.thumb > a"):
         new_URL.append(i['href'])
-        print(i['href'])
+        # print(i['href'])
 
 # -------------------내용------------------------------------------------
-# f = open('daum.txt', 'w')
-# for postURL in new_URL:
-#     res4 = requests.get(postURL)
-#     soup4 = BeautifulSoup(res4.text, 'html.parser')
-#     body = soup4.find(class_='article_txt').findAll('div')
-#     article = [];
-#     for i in body:
-#         article.append(i.get_text())
-#         print(i.get_text())
-#         # f.write(i.get_text())
-#     print(article)
-# f.close()
-
+f = open('daum.txt', 'w')
+for postURL in new_URL:
+    # print(postURL)
+    res4 = requests.get(postURL)
+    soup4 = BeautifulSoup(res4.text, 'html.parser')
+    body = soup4.find(class_='article_title').findAll('h1')
+    for i in body:
+        print(i.get_text())
+        f.write(i.get_text()+"\n")
+f.close()
 
 # ------------------------------------------------------------------
-
