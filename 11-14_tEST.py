@@ -11,7 +11,7 @@ req = requests.get(DongaUrl)
 soup2 = BeautifulSoup(req.text, 'html.parser')
 for i in soup2.select("#content > div.page > a"):
     urlArray.append(DongaUrl + i['href'])
-    print("https://www.donga.com/news/Culture/List" + i['href'])
+    # print("https://www.donga.com/news/Culture/List" + i['href'])
 
 # list에있는 기사url을가져온다=> 동아일보만 200개 , PLUS동아일보는 193개
 # 동아일보 특성상 문화 페이지에도 다른 종류에 기사들이 포함되있다.
@@ -20,11 +20,23 @@ for i in range(0, len(urlArray) - 1):
     soup2 = BeautifulSoup(req.text, 'html.parser')
     for i in soup2.select("#content > div.articleList>div.thumb > a"):
         new_URL.append(i['href'])
-        print(i['href'])
+        # print(i['href'])
 print(len(new_URL))
 
 # ----------------------------------------------------------------------------
-
+f = open('daum.txt', 'w')
+for postURL in new_URL:
+    res=requests.get(postURL)
+    soup=BeautifulSoup(res.content,'html.parser')
+    body = soup.find(class_='article_txt').findAll('div')
+    # print(body)
+    article = [];
+    for i in body:
+        article.append(i.get_text())
+        # print(i.get_text())
+        f.write(i.get_text())
+f.close()
+# ------------------------------------------------------------------
 
 # https://www.donga.com/news/Culture/List 리스트에 URL만 다가져오는거
 array = [];
