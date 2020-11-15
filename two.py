@@ -14,6 +14,7 @@ for i in soup.select(".paging>a"):
     urlArray.append("https:" + i['href'])
     print("https:" + i['href'])
 
+
 # 동아일보 특성상 문화 페이지에도 다른 종류에 기사들이 포함되있다.
 for UrlList in urlArray:
     req2 = requests.get(UrlList)
