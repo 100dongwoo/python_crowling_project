@@ -1,3 +1,5 @@
+import time
+
 import requests
 from bs4 import BeautifulSoup
 # 한겨레
@@ -31,8 +33,9 @@ for postURL in new_URL:
         soup4 = BeautifulSoup(res4.text, 'html.parser')
         body = soup4.find(class_='story-news article').findAll("p")
         for i in body:
-            print(i.get_text())
-            f.write(i.get_text())
+            if i.get_text()[:len("\n<저작권자(c) 연합뉴스,\n무단 전재-재배포 금지>")] != "\n<저작권자(c) 연합뉴스,\n무단 전재-재배포 금지>":
+                 print(i.get_text())
+                 f.write(i.get_text()+"\n")
     except Exception as e:
         print(e)
         pass
